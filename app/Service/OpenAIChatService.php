@@ -8,13 +8,9 @@ class OpenAIChatService
 {
 
     private string $baseUrl = 'https://api.openai.com/v1/chat/completions';
-    private string $apiKey;
-    private string $model;
 
-    public function __construct()
+    public function __construct(private string $apiKey, private string $model)
     {
-        $this->apiKey = config('services.openai.api_key');
-        $this->model = config('services.openai.model');
     }
 
     public function sendMessage(array $messages)
