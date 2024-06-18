@@ -16,10 +16,7 @@ class AppServiceProvider extends ServiceProvider
             $apiKey = config('services.openai.api_key');
             $model = config('services.openai.model');
 
-            return $app->make(OpenAIChatService::class, [
-                'apiKey' => $apiKey,
-                'model' => $model,
-            ]);
+            return new OpenAIChatService($apiKey, $model);
         });
     }
 
