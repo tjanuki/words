@@ -1,10 +1,15 @@
+import json
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet as wn
 from nltk.stem import WordNetLemmatizer
 
-# Function to convert nltk POS tags to WordNet POS tags
+# Ensure required NLTK resources are downloaded
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+
 def get_wordnet_pos(treebank_tag):
     if treebank_tag.startswith('J'):
         return wn.ADJ
@@ -17,7 +22,6 @@ def get_wordnet_pos(treebank_tag):
     else:
         return None
 
-# Function to normalize a sentence
 def normalize_sentence(sentence):
     lemmatizer = WordNetLemmatizer()
     tokens = word_tokenize(sentence.lower())
@@ -34,9 +38,14 @@ def normalize_sentence(sentence):
 
     return ' '.join(normalized_tokens)
 
-# Test with a sample sentence
-sentence = "Told apples"
-normalized_sentence = normalize_sentence(sentence)
-
-print(f"Original sentence: {sentence}")
-print(f"Normalized sentence: {normalized_sentence}")
+def lambda_handler(event, context):
+    body = json.loads(event['body'])
+    sentence = body['sentence']
+    normalized_sentence = normalize_sentence(sentence)
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'original_sentence': sentence,
+            'normalized_sentence': normalized_sentence
+        })
+    }
