@@ -1,12 +1,12 @@
-import logging
+import json
 
-# Setup logging
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
-def lambda_handler(event, context):
-    logger.info("Event: " + str(event))
-    return {
-        'statusCode': 200,
-        'body': 'Hello from Lambda!'
+def handler(event, context):
+    response = {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Hello from basic_function!",
+            "event": event
+        })
     }
+
+    return response
