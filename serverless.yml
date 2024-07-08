@@ -45,6 +45,13 @@ functions:
         - http:
             path: normalize
             method: post
+
+    basic:
+      handler: lambda/basic_function.lambda_handler
+      events:
+        - http:
+            path: basic
+            method: get
 plugins:
     # We need to include the Bref plugin
     - ./vendor/bref/bref
