@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\LambdaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::get('/invoke-lambda', LambdaController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
